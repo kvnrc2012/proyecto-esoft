@@ -36,7 +36,6 @@ public class ProductoController {
             int page = params.get("page")  != null ? (Integer.valueOf(params.get("page").toString()) -1 ) : 0;
             int numPage = params.get("numPage")  != null ? (Integer.valueOf(params.get("numPage").toString())) : 5;
 
-            // int numPage = Integer.valueOf(params.get("numPage").toString());
 
             PageRequest pageRequest = PageRequest.of(page,numPage);
             Page<Producto> pageProducto = productoService.getAll(pageRequest);
@@ -72,15 +71,7 @@ public class ProductoController {
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String store(Producto producto,RedirectAttributes flash) {
-        System.out.println(producto.getId());
-        System.out.println(producto.getCategoria().getId());
-        System.out.println(producto.getNombre());
-        System.out.println(producto.getFecha());
-        System.out.println(producto.getPrecio());
-        System.out.println(producto.getStock());
-        String rpta = productoService.guardarProducto(producto);
-        System.out.println(rpta);
+    public String store(Producto producto,RedirectAttributes flash) {  
         return "redirect:/producto/";
     }
 

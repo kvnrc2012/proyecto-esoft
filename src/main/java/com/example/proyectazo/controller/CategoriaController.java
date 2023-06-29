@@ -2,7 +2,6 @@ package com.example.proyectazo.controller;
 
 import com.example.proyectazo.model.entity.Categoria;
 import com.example.proyectazo.model.service.ICategoriaService;
-//import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import java.util.List;
 import java.util.Map;
@@ -34,8 +33,6 @@ public class CategoriaController {
             int page = params.get("page")  != null ? (Integer.valueOf(params.get("page").toString()) -1 ) : 0;
             int numPage = params.get("numPage")  != null ? (Integer.valueOf(params.get("numPage").toString())) : 5;
 
-            // int numPage = Integer.valueOf(params.get("numPage").toString());
-
             PageRequest pageRequest = PageRequest.of(page,numPage);
             Page<Categoria> pageCategoria = categoriaService.getAll(pageRequest);
 
@@ -57,8 +54,6 @@ public class CategoriaController {
         model.addAttribute("last", totalPage);
         model.addAttribute("numPage", numPage);
 
-
-        //return categoriaService.buscarCategoria(Long.valueOf(17));
         return "categoria/main";
     }
     @RequestMapping("/editar/{id}")
@@ -81,10 +76,5 @@ public class CategoriaController {
     public String store(Categoria categoria){
         categoriaService.guardarCategoria(categoria);
         return "redirect:/categoria/";
-    }
-
-
-    
-        
-
+    }   
 }

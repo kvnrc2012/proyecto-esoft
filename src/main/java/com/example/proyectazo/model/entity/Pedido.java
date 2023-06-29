@@ -160,7 +160,7 @@ public class Pedido implements Serializable {
     }
 
     public Pedido(Date fecha, String descripcion, String observacion, Cliente cliente, Local local, Empleado empleado,
-            Long cantidad, Double total, Long producto) {
+            Long producto) {
         this.fecha = fecha;
         this.descripcion = descripcion;
         this.observacion = observacion;

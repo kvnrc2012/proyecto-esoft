@@ -53,7 +53,6 @@ const marcarCampoInvalido = (campo) => {
 //*Principio Solid 2 - Open and Close
 const validarFormulario = (e) => {
   const campo = e.target.name;
-  console.log(campo);
   validarCampo(eval(`expresiones.${campo}`), e.target, campo);
 };
 
