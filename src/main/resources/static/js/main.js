@@ -159,38 +159,20 @@
   //* Proveedor
   $editproveedor.forEach((el) => {
     el.addEventListener("click", () => {
-      d.getElementById("id").value = el.dataset.id;
-      d.getElementById("nombre").value = el.dataset.name;
-      d.getElementById("direccion").value = el.dataset.direccion;
-      d.getElementById("fecha").value = el.dataset.fecha;
-      d.getElementById("email").value = el.dataset.email;
-      d.getElementById("telefono").value = el.dataset.telefono;
-
-      d.getElementById("nombre").disabled = false;
-      d.getElementById("direccion").disabled = false;
-      d.getElementById("fecha").disabled = false;
-      d.getElementById("email").disabled = false;
-      d.getElementById("telefono").disabled = false;
-
+      txtproveedor.forEach((ele) => {
+        d.getElementById(ele).value = eval(`el.dataset.${ele}`);
+        d.getElementById(ele).disabled = false;
+      });
       d.getElementById("exampleModalLabel").textContent = "EDITAR PROVEEDOR";
       d.getElementById("btn-guardar").style = "display : block";
     });
   });
   $verproveedor.forEach((el) => {
     el.addEventListener("click", () => {
-      d.getElementById("id").value = el.dataset.id;
-      d.getElementById("nombre").value = el.dataset.name;
-      d.getElementById("direccion").value = el.dataset.direccion;
-      d.getElementById("fecha").value = el.dataset.fecha;
-      d.getElementById("email").value = el.dataset.email;
-      d.getElementById("telefono").value = el.dataset.telefono;
-
-      d.getElementById("nombre").setAttribute("disabled", "true");
-      d.getElementById("direccion").setAttribute("disabled", "true");
-      d.getElementById("fecha").setAttribute("disabled", "true");
-      d.getElementById("email").setAttribute("disabled", "true");
-      d.getElementById("telefono").setAttribute("disabled", "true");
-
+      txtproveedor.forEach((ele) => {
+        d.getElementById(ele).value = eval(`el.dataset.${ele}`);
+        d.getElementById(ele).disabled = true;
+      });
       d.getElementById("exampleModalLabel").textContent = "VER PROVEEDOR";
       d.getElementById("btn-guardar").style = "display : none";
     });

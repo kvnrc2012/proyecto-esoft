@@ -3,7 +3,7 @@ const inputs = document.querySelectorAll("#form input");
 console.log(inputs);
 
 const expresiones = {
-  correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+  email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
   password: /^[a-zA-Z0-9_.+-]{2,}$/,
 };
 
@@ -53,6 +53,7 @@ const marcarCampoInvalido = (campo) => {
 //*Principio Solid 2 - Open and Close
 const validarFormulario = (e) => {
   const campo = e.target.name;
+  console.log(campo);
   validarCampo(eval(`expresiones.${campo}`), e.target, campo);
 };
 
