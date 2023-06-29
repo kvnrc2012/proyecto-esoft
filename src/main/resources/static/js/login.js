@@ -1,6 +1,7 @@
 const formulario = document.getElementById("form");
 const inputs = document.querySelectorAll("#form input");
 console.log(inputs);
+
 const expresiones = {
   correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
   password: /^[a-zA-Z0-9_.+-]{2,}$/,
@@ -11,43 +12,48 @@ const campos = {
   password: false,
 };
 
-const validarFormulario = (e) => {
-  if (e.target.name == "password") {
-    validarCampo(expresiones.password, e.target, e.target.name);
-  }
-  if (e.target.name == "correo") {
-    validarCampo(expresiones.correo, e.target, e.target.name);
+const validarCampo = (expresion, input, campo) => {
+  if (expresion.test(input.value)) {
+    marcarCampoValido(campo);
+    campos[campo] = true;
+  } else {
+    marcarCampoInvalido(campo);
+    campos[campo] = false;
   }
 };
 
-const validarCampo = (expresion, input, campo) => {
-  if (expresion.test(input.value)) {
-    document.querySelector(`#${campo}-group .form__input-estado`).style =
-      "color : green";
-    document
-      .querySelector(`#${campo}-group .form__input-estado`)
-      .classList.add("fa-check-circle");
-    document
-      .querySelector(`#${campo}-group .form__input-estado`)
-      .classList.remove("fa-times-circle");
-    document
-      .querySelector(`#${campo}-group .form__input-error`)
-      .classList.remove("form__input-error--active");
-    campos[campo] = true;
-  } else {
-    document.querySelector(`#${campo}-group .form__input-estado`).style =
-      "color : red";
-    document
-      .querySelector(`#${campo}-group .form__input-estado`)
-      .classList.add("fa-times-circle");
-    document
-      .querySelector(`#${campo}-group .form__input-estado`)
-      .classList.remove("fa-check-circle");
-    document
-      .querySelector(`#${campo}-group .form__input-error`)
-      .classList.add("form__input-error--active");
-    campos[campo] = false;
-  }
+const marcarCampoValido = (campo) => {
+  const estadoElement = document.querySelector(
+    `#${campo}-group .form__input-estado`
+  );
+  const errorElement = document.querySelector(
+    `#${campo}-group .form__input-error`
+  );
+
+  estadoElement.style.color = "green";
+  estadoElement.classList.add("fa-check-circle");
+  estadoElement.classList.remove("fa-times-circle");
+  errorElement.classList.remove("form__input-error--active");
+};
+
+const marcarCampoInvalido = (campo) => {
+  const estadoElement = document.querySelector(
+    `#${campo}-group .form__input-estado`
+  );
+  const errorElement = document.querySelector(
+    `#${campo}-group .form__input-error`
+  );
+
+  estadoElement.style.color = "red";
+  estadoElement.classList.add("fa-times-circle");
+  estadoElement.classList.remove("fa-check-circle");
+  errorElement.classList.add("form__input-error--active");
+};
+
+//*Principio Solid 2 - Open and Close
+const validarFormulario = (e) => {
+  const campo = e.target.name;
+  validarCampo(eval(`expresiones.${campo}`), e.target, campo);
 };
 
 inputs.forEach((input) => {
@@ -58,16 +64,15 @@ inputs.forEach((input) => {
 formulario.addEventListener("submit", (e) => {
   e.preventDefault();
   if (campos.email && campos.password) {
-    form.reset();
-    inputs.forEach((el) => {
-      document
-        .querySelectorAll(`.form-group__input .form__input-estado`)
-        .forEach((el) => {
-          el.style = "color = black";
-        });
-    });
-    document.querySelectorAll(`.form__input-estado`).forEach((el) => {
-      el.classList.remove("fa-check-circle");
-    });
+    formulario.reset();
+    resetearCampos();
   }
 });
+
+//*Principio Solid 1 - Single Responsibility
+const resetearCampos = () => {
+  document.querySelectorAll(".form__input-estado").forEach((element) => {
+    element.style.color = "black";
+    element.classList.remove("fa-check-circle");
+  });
+};
