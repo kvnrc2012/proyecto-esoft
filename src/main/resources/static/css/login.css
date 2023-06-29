@@ -1,0 +1,226 @@
+@font-face {
+    font-family: Poppins;
+    src: url("../assets/fonts/Poppins-Regular.ttf");
+}
+/* @link https://utopia.fyi/type/calculator?c=320,21,1.2,1140,24,1.25,5,2,&s=0.75|0.5|0.25,1.5|2|3|4|6,s-l */
+:root {
+    --white-color: #fff;
+    --black-color: #000;
+    --primary-color : #024A61;
+    --secondary-color : #FC9D9A;
+    --third-color : #E06562;
+    --fourth-color : #C72617;
+    --fifth-color: #BF6542;
+    --sixth-color : #9C4D2F;
+    --seventh-color : #83AF9B;
+    --gray-light-color : #F3F3F3;
+    --font-1: 'Times New Roman',sans-serif;
+    --font-2: Poppins,sans-serif;
+    --max-width: 1200px;
+    --black-alpha-color: rgba(255, 255, 255, 0.3);
+    --step--2: clamp(0.96rem, calc(0.89rem + 0.10vw), 0.91rem);
+    --step--1: clamp(1.20rem, calc(1.05rem + 0.21vw), 1.09rem);
+    --step-0: clamp(1.31rem, calc(1.24rem + 0.37vw), 1.50rem);
+    --step-1: clamp(1.58rem, calc(1.46rem + 0.59vw), 1.88rem);
+    --step-2: clamp(1.89rem, calc(1.71rem + 0.89vw), 2.34rem);
+    --step-3: clamp(2.27rem, calc(2.01rem + 1.29vw), 2.93rem);
+    --step-4: clamp(2.72rem, calc(2.36rem + 1.83vw), 3.66rem);
+    --step-5: clamp(3.27rem, calc(2.75rem + 2.56vw), 4.58rem);
+}
+
+/****** Style Reset ********/
+html{
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+*,
+*::after,
+*::before{
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-1);
+    overflow-x: hidden;
+    background-color: var(--seventh-color);
+}
+img{
+    max-width: 100%;
+    height: auto;
+}
+li{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+}
+.container{
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+@media screen and (min-width: 0px) {
+    .container{
+        width: 95%;
+    }
+}
+@media screen and (min-width: 576px) {
+    .container{
+        width: 90%;
+    }
+}
+@media screen and (min-width: 768px) {
+    .container{
+        width: 80%;
+    }
+}
+@media screen and (min-width: 992px) {
+    .container{
+        width: 60%;
+    }
+}
+@media screen and (min-width: 1200px) {
+    .container{
+        width: 40%;
+    }
+}
+@media screen and (min-width: 1400px) {
+    .container{
+        width: 35%;
+    }
+}
+.container__logo{
+    height: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+}
+.container__logo p{
+    padding-top: 0.5rem;
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+.container__form{
+    width: 100%;
+    height: 80%;
+    background-color: var(--gray-light-color);
+    border-radius: 15px;
+}
+.container__form .form{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+.form__title{
+    color: var(--primary-color);
+    margin: 3rem auto;
+    font-size: 1.8rem;
+}
+.form-group{
+    width: 100%;
+    padding: 0 2.5rem;
+    margin-top: 1.5rem;
+}
+.form-group i{
+    font-size: 1.2rem;
+    padding-right: .4rem;
+}
+.form-group input:focus{
+    border: 2px solid var(--primary-color);
+}
+label{
+    font-size: 1rem;
+    display: block;
+    color: var(--primary-color);
+    margin-bottom: .4rem;
+}
+.form__input{
+    width: 90%;
+    border: none;
+    outline: none;
+    padding: .6rem 1rem;
+    font-size: 1rem;
+}
+input[type="submit"]{
+    width: 80%;
+    text-align: start;
+    padding: 0;
+    text-align: center;
+    padding: .7rem 0 ;
+    color: var(--gray-light-color);
+    font-size: 1.1rem;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 1.2rem 0;
+}
+.btn{
+    width: 80%;
+    text-align: start;
+    padding: 0;
+    text-align: center;
+    padding: .7rem 0 ;
+    color: var(--gray-light-color);
+    font-size: 1.1rem;
+    background-color: var(--primary-color);
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 1.2rem 0;
+}
+.btn:hover{
+    background-color: #075b77;
+}
+input[type="submit"]:hover{
+    background-color: #075b77;
+}
+.form-group__input{
+    position: relative;
+    width: 100%;
+}
+.form__input-estado{
+    position: absolute;
+    right: 50px;
+    bottom: 10px;
+}
+.form__input-estado--active{
+    display: block;
+}
+.form__input-error{
+    display: inline-block;
+    margin: .2rem 0;
+    display: none;
+}
+.form__input-error--active{
+    display: block;
+}
+.form__message{
+    text-align: center;
+    width: 100%;
+    margin-top: 1.5rem;
+    color: red;
+    display: none;
+}
+.form__message--active{
+    display: block;
+}
+.password{
+    border-top: 1px solid var(--primary-color) ;
+    text-align: center;
+    padding: 1rem 0;
+    height: 10%;
+}

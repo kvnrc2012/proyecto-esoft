@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=http://www.thymeleaf.org xmlns:sec=http://www.thymeleaf.org/extras/spring-security
+    xmlns:shiro=http://www.pollix.at/thymeleaf/shiro>
+<head th:replace="layout/fragmentos :: head">
+</head>
+<body>
+    <aside th:replace="layout/fragmentos :: aside"></aside>
+    <!-- <div th:replace="layout/fragmentos :: overlay"></div> -->
+    <div class="overlay"></div>
+    <main class="main-wrapper">
+
+        <div th:replace="layout/fragmentos :: header"></div>
+        <section class="section">
+
+            <div class="container-fluid py-4">
+                <div class="alert alert-info w-75 text-center mx-auto my-0" role="alert"
+                    th:if="${mensajeFinal != null}">
+                    <span th:text="${mensajeFinal}"></span>
+                </div>
+                <div class="card w-75 mx-auto ">
+                    <div class="card-header text-dark py-4">
+                        <div class="row justify-content-evenly align-items-center">
+                            <div class="col-12 col-lg-6 text-center fw-600 fs-3">MATERIALES ACTUALMENTE</div>
+                            <div class="col-12 col-lg-6 text-center">
+                                <div class="row py-3 justify-content-center">
+                                    <div class="col-12">
+                                        <form th:action="@{/material/buscar/}" style="display: none;">
+                                            <button type="submit" class="btn-sm btn-primary px-4 py-2"><i
+                                                    class="fas fa-search p-0 m-0"></i></button>
+                                        </form>
+                                        <input type="text" id="search" name="id" placeholder="Buscar"
+                                            class="text-start ps-2 mx-4 p-0 dash_search">
+                                        <a href="" id="agregarmaterial" class="btn btn-success my-2"
+                                            data-bs-toggle="modal" data-bs-target="#formModal">
+                                            AGREGAR
+                                            <i id="iconproveedor" class="fas fa-plus "></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive ">
+                        <div class="row pb-3">
+                            <div class="col-12">
+                                <p class="d-inline">Mostrar</p>
+                                <select id="select" name="select">
+                                    <option value="5" th:selected=" ${numPage ==  5 } ?  true : false">5</option>
+                                    <option value="10" th:selected=" ${numPage == 10 } ?  true : false">10</option>
+                                    <option value="15" th:selected=" ${numPage == 15 } ?  true : false">15</option>
+                                </select>
+                                <p class="d-inline">Registros</p>
+                            </div>
+                        </div>
+                        <table class="table table-hover table-bordered text-center ">
+                            <thead>
+                                <tr>
+                                    <th class="px-3">ID</th>
+                                    <th class="px-3">Descripción</th>
+                                    <th class="px-3">Fecha</th>
+                                    <th class="px-3"></th>
+                                    <th class="px-3"></th>
+                                    <th class="px-4"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item: ${list}">
+                                    <td th:text="${item.id}"></td>
+                                    <td th:text="${item.descripcion}" th:data-nombre="${item.descripcion}"></td>
+                                    <td th:text="${item.fecha}"></td>
+                                    <td>
+                                        <a th:href="@{/material/editar/} + ${item.id}" id="editmaterial"
+                                            th:data-id="${item.id}" th:data-name="${item.descripcion}"
+                                            th:data-fecha="${item.fecha}" th:data-precio="${item.precio}"
+                                            th:data-stock="${item.stock}" class="btn btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#formModal">
+                                            <i class="fas fa-edit"></i> Editar</a>
+                                    </td>
+                                    <td>
+                                        <a id="eliminarmaterial" th:data-id="${item.id}" data-bs-toggle="modal"
+                                            data-bs-target="#formModal2" class="btn btn-danger">
+                                            <i class="fas fa-trash pe-1"></i>Eliminar</a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/material/ver/} + ${item.id}" id="vermaterial"
+                                            th:data-id="${item.id}" th:data-name="${item.descripcion}"
+                                            th:data-fecha="${item.fecha}" th:data-precio="${item.precio}"
+                                            th:data-stock="${item.stock}" class="btn btn-secondary"
+                                            data-bs-toggle="modal" data-bs-target="#formModal">
+                                            <i class="fas fa-eye pe-1"></i>Ver</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-12">
+                                <nav aria-label="Pagination">
+                                    <ul class="pagination justify-content-center">
+                                        <li class="page-item" th:classappend="${prev == 0 ? 'disabled' : ''}">
+                                            <a class="page-link" th:href="@{|/material/?page=${prev}|}"><span
+                                                    aria-hidden="true">&laquo;</span></a>
+                                        </li>
+                                        <li class="page-item" th:each="page : ${pages}"
+                                            th:classappend="${current == page ? 'active' : ''}">
+                                            <a class="page-link" th:href="@{|/material/?page=${page}|}"
+                                                th:text="${page}"></a>
+                                        </li>
+                                        <li class="page-item" th:classappend="${current == last ? 'disabled' : ''}">
+                                            <a class="page-link" th:href="@{|/material/?page=${next}|}"><span
+                                                    aria-hidden="true">&raquo;</span></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer th:replace="layout/fragmentos :: footer">
+        </footer>
+    </main>
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" th:action="@{/material/form}" th:object="${material}" enctype="multipart/form-data">
+                    <input id="id" type="hidden" th:field="*{id}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" th:text="${mensaje}"></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12  mb-3">
+                                <label>Descripción </label>
+                                <input id="name" type="text" th:field="*{descripcion}" class="form-control"
+                                    placeholder="Ingrese Descripción" th:errorclass="'form-control alert-danger'" />
+                                <small class="form-text text-danger" th:if="${#fields.hasErrors('descripcion')}">
+                                    Campo Obligatorio
+                                </small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12  mb-3">
+                                <label>Fecha: </label>
+                                <input id="fecha" type="date" th:field="*{fecha}" class="form-control"
+                                    th:errorclass="'form-control alert-danger'" />
+                                <small class="form-text text-danger" th:if="${#fields.hasErrors('fecha')}">
+                                    Campo Obligatorio
+                                </small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12  mb-3">
+                                <label>Precio: </label>
+                                <input id="precio" type="text" th:field="*{precio}" class="form-control"
+                                    placeholder="Ingrese Precio" th:errorclass="'form-control alert-danger'" />
+                                <small class="form-text text-danger" th:if="${#fields.hasErrors('precio')}">
+                                    Campo Obligatorio
+                                </small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12  mb-3">
+                                <label>Stock: </label>
+                                <input id="stock" type="number" th:field="*{stock}" class="form-control"
+                                    placeholder="Ingrese Stock" th:errorclass="'form-control alert-danger'" />
+                                <small class="form-text text-danger" th:if="${#fields.hasErrors('stock')}">
+                                    Campo Obligatorio
+                                </small>
+                            </div>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-12  mb-3">
+                                <label>Imagen: </label>
+                                <input id="foto" type="file" th:field="*{foto}" class="form-control"                            
+                                />
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CERRAR</button>
+                        <input type="submit" id="btn-guardar" class="btn btn-primary" value="GUARDAR">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="formModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-700 fs-4" id="exampleModalLabel"><i class="fas fa-trash"></i> Borrar !
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-dark fw-500">
+                        Está Seguro de Eliminar este Registro ?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CERRAR</button>
+                    <a id="deletematerial" type="submit" class="btn btn-danger">SI, estoy Seguro</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="layout/fragmentos :: extra"></div>
+</body>
+</html>
